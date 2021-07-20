@@ -7,7 +7,7 @@ describe('QuicksortService', () => {
   let service: QuicksortService;
 
   const tester = (data: TestingData) => {
-    expect(service.quickSort(data.array).toString()).toBe(data.expected.toString());
+    expect(service.quickSort(data.array).sortedArray?.toString()).toBe(data.expected.toString());
   }
 
   beforeEach(() => {
