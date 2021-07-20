@@ -1,15 +1,12 @@
 <div class="viwer-container">
-    <div class="viwer-item" *ngFor="let item of sortingArrayOriginal"> {{ item }}</div>
-</div>
-<div class="viwer-container">
     <div class="viwer-item"
         *ngFor="let item of sortingArray; let i = index"
         [ngClass]="{
-            pivot: i === currentPivot,
-            edge: i === left || i === right,
             swap: i === swapLeft || i === swapRight
         }"
+        [ngStyle]="{'height.px': item * 10}"
     >
         {{ item }}
     </div>
 </div>
+<button (click)="doSorting()">Sort</button>
