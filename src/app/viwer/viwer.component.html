@@ -1,1 +1,15 @@
-<p>viwer works!</p>
+<div class="viwer-container">
+    <div class="viwer-item" *ngFor="let item of sortingArrayOriginal"> {{ item }}</div>
+</div>
+<div class="viwer-container">
+    <div class="viwer-item"
+        *ngFor="let item of sortingArray; let i = index"
+        [ngClass]="{
+            pivot: i === currentPivot,
+            edge: i === left || i === right,
+            swap: i === swapLeft || i === swapRight
+        }"
+    >
+        {{ item }}
+    </div>
+</div>

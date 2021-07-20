@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { emptyArrayData, filledArrayData, TestingData } from './mockTestData';
+import { emptyArrayData, filledArrayData, TestingData } from '../mockTestData';
 import { QuicksortService } from './quicksort.service';
 
 
