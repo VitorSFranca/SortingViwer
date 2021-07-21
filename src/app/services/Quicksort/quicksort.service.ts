@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 
-type Comparator<T> = (o1: T, o2: T) => number;
-
-export interface sortingSteps {
+export interface SortingSteps {
   type?: string;
   originalArray?: number[];
   sortedArray?: number[];
@@ -13,75 +11,65 @@ export interface sortingSteps {
   providedIn: 'root',
 })
 export class QuicksortService {
-
-  /**
-   * Split array and swap values
-   *
-   * @param {Array<number>} array
-   * @param {number} [left=0]
-   * @param {number} [right=array.length - 1]
-   * @returns {number}
-   */
-  partition(array: Array<number>, left: number = 0, right: number = array.length - 1, sortingSteps: sortingSteps) {
+  partition = (
+    array: Array<number>,
+    left: number = 0,
+    right: number = array.length - 1,
+    sortingSteps: SortingSteps,
+  ) => {
     const pivotIndex = Math.floor((right + left) / 2);
     const pivot = array[pivotIndex];
     const currentStep = [pivotIndex, left, right];
+    const currentArray = [...array];
     let i = left;
     let j = right;
-  
+
     while (i <= j) {
       while (array[i] < pivot) {
-        i++;
+        i += 1;
       }
-  
+
       while (array[j] > pivot) {
-        j--;
+        j -= 1;
       }
-  
+
       if (i <= j) {
-        [array[i], array[j]] = [array[j], array[i]];
-        currentStep.push(...[i,j]);
-        i++;
-        j--;
-      }
-    }
-  
-    sortingSteps.steps?.push(currentStep);
-    return i;
-  }
-  
-  /**
-   * Quicksort implementation
-   *
-   * @param {Array<number>} array
-   * @param {number} [left=0]
-   * @param {number} [right=array.length - 1]
-   * @returns {Array<number>}
-   */
-  quickSort(array: Array<number>, left: number = 0, right: number = array.length - 1, sortingSteps?: sortingSteps) {
-    if(!sortingSteps) {
-      sortingSteps = {
-        type: 'Quicksort',
-        originalArray: [...array],
-        sortedArray: [],
-        steps: [],
+        [currentArray[i], currentArray[j]] = [currentArray[j], currentArray[i]];
+        currentStep.push(...[i, j]);
+        i += 1;
+        j -= 1;
       }
     }
 
-    let index;
-  
+    sortingSteps.steps?.push(currentStep);
+    return { index: i, currentArray };
+  };
+
+  quickSort = (
+    array: Array<number>,
+    left: number = 0,
+    right: number = array.length - 1,
+    sortingSteps?: SortingSteps,
+  ) => {
+    const currentSortingSteps = sortingSteps || {
+      type: 'Quicksort',
+      originalArray: [...array],
+      sortedArray: [],
+      steps: [],
+    };
+
     if (array.length > 1) {
-      index = this.partition(array, left, right, sortingSteps);
-  
+      const { index, currentArray } = this.partition(array, left, right, currentSortingSteps);
+
       if (left < index - 1) {
-        this.quickSort(array, left, index - 1, sortingSteps);
+        this.quickSort(currentArray, left, index - 1, currentSortingSteps);
       }
-  
+
       if (index < right) {
-        this.quickSort(array, index, right, sortingSteps);
+        this.quickSort(currentArray, index, right, currentSortingSteps);
       }
     }
-    sortingSteps.sortedArray = array;
-    return sortingSteps;
-  }
+    currentSortingSteps.sortedArray = array;
+    return currentSortingSteps;
+  };
 }

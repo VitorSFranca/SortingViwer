@@ -8,9 +8,8 @@ describe('ViwerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ViwerComponent ]
-    })
-    .compileComponents();
+      declarations: [ViwerComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
