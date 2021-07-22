@@ -1,12 +1,17 @@
 import { TestBed } from '@angular/core/testing';
-import { emptyArrayData, filledArrayData, TestingData } from '../mockTestData';
+import { emptyArrayData, filledArrayData, StepsDataMock } from '../mockTestData';
 import { QuicksortService } from './quicksort.service';
 
 describe('QuicksortService', () => {
   let service: QuicksortService;
 
-  const tester = (data: TestingData) => {
-    expect(service.quickSort(data.array).sortedArray?.toString()).toBe(data.expected.toString());
+  const tester = (data: StepsDataMock) => {
+    const result = service.quickSort(data.arrayToSort);
+
+    expect(result.type).toBe(data.expectedResult.type);
+    expect(result.originalArray?.toString()).toBe(data.expectedResult.originalArray?.toString());
+    expect(result.sortedArray?.toString()).toBe(data.expectedResult.sortedArray?.toString());
+    expect(result.steps?.toString()).toBe(data.expectedResult.steps?.toString());
   };
 
   beforeEach(() => {
@@ -18,11 +23,11 @@ describe('QuicksortService', () => {
     expect(service).toBeTruthy();
   });
 
-  // it('Quicksort with complete array', () => {
-  //   tester(filledArrayData);
-  // });
+  it('Quicksort with complete array', () => {
+    tester(filledArrayData);
+  });
 
-  // it('Quicksort with empty array', () => {
-  //   tester(emptyArrayData);
-  // });
+  it('Quicksort with empty array', () => {
+    tester(emptyArrayData);
+  });
 });

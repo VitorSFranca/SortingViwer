@@ -1,5 +1,5 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm test
+ng test --watch=false --code-coverage --source-map true --browsers=ChromeHeadlessCI
 npm run lint

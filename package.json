@@ -6,7 +6,7 @@
     "start": "ng serve --open",
     "build": "ng build --base-href /SortingViwer/",
     "build:ci": "ng build --sourceMap=false --base-href /SortingViwer/",
-    "test:ci": "ng test --watch=false --code-coverage --source-map true",
+    "test:ci": "ng test --watch=false --code-coverage --source-map true --browsers=ChromeHeadlessCI",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prepare": "husky install",
