@@ -6,13 +6,12 @@ export interface SortingSteps {
 }
 
 export const mergeSteps = (previousStep: SortingSteps, nextStep: SortingSteps): SortingSteps => {
-  if (!previousStep || !nextStep) throw new Error('MergeSteps: Empty step!');
-  else if (previousStep.type !== nextStep.type)
+  if (previousStep.type !== nextStep.type)
     throw new Error(
       `MergeSteps: Incompatible sorting types ${previousStep.type} != ${nextStep.type}`,
     );
   else if (previousStep.originalArray.toString() !== nextStep.originalArray.toString())
-    throw new Error(`MergeSteps: Different original arrays`);
+    throw new Error('MergeSteps: Different original arrays');
   return {
     type: previousStep.type,
     originalArray: previousStep.originalArray,

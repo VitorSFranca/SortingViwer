@@ -9,7 +9,7 @@ describe('QuicksortService', () => {
     const result = service.quickSort(data.arrayToSort);
 
     expect(result.type).toBe(data.expectedResult.type);
-    expect(result.originalArray?.toString()).toBe(data.expectedResult.sortedArray?.toString());
+    expect(result.originalArray?.toString()).toBe(data.expectedResult.originalArray?.toString());
     expect(result.sortedArray?.toString()).toBe(data.expectedResult.sortedArray?.toString());
     expect(result.steps?.toString()).toBe(data.expectedResult.steps?.toString());
   };
@@ -23,9 +23,9 @@ describe('QuicksortService', () => {
     expect(service).toBeTruthy();
   });
 
-  // it('Quicksort with complete array', () => {
-  //   tester(filledArrayData);
-  // });
+  it('Quicksort with complete array', () => {
+    tester(filledArrayData);
+  });
 
   it('Quicksort with empty array', () => {
     tester(emptyArrayData);

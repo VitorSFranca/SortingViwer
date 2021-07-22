@@ -22,42 +22,26 @@ export class ViwerComponent {
   swapRight = -1;
 
   constructor(private quicksortService: QuicksortService) {
-    // console.log(this.quicksortService.quickSort([...this.sortingArray]));
-  }
-
-  showIterations(): void {
-    this.nextIteration(this.result.steps ? this.result.steps[0] : []);
+    this.quicksortService.quickSort([...this.sortingArray]);
   }
 
   doSorting(): void {
     this.result = this.quicksortService.quickSort([...this.sortingArray]);
-    this.sortingArray = this.result.sortedArray;
-    // this.showIterations();
+    this.nextIteration();
   }
 
-  nextIteration(currentIteration: number[], step = 0, iteration = 0): void {
-    let hasNext = false;
-    let nextIterationItem = currentIteration;
-    let cStep = step;
-    let cIteration = iteration;
+  nextIteration(step = 0, iteration = 0): void {
+    const currentIteration = this.result.steps[step];
     [this.currentPivot, this.left, this.right] = currentIteration;
     this.swapLeft = currentIteration[3 + iteration * 2];
     this.swapRight = currentIteration[4 + iteration * 2];
-    if (currentIteration.length - 3 - iteration * 2 > 2) {
-      cIteration += 1;
-      hasNext = true;
-    } else if (this.result.steps && this.result.steps.length >= step + 1) {
-      cIteration = 0;
-      cStep += 1;
-      nextIterationItem = this.result.steps[step];
-      hasNext = true;
-    }
     setTimeout(() => {
       [this.sortingArray[this.swapLeft], this.sortingArray[this.swapRight]] = [
         this.sortingArray[this.swapRight],
         this.sortingArray[this.swapLeft],
       ];
-      if (hasNext) this.nextIteration(nextIterationItem, cStep, cIteration);
+      if (currentIteration.length > 5 + 2 * iteration) this.nextIteration(step, iteration + 1);
+      else if (this.result.steps.length > step + 1) this.nextIteration(step + 1, 0);
       else {
         this.currentPivot = -1;
         this.left = -1;
