@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-
-export interface SortingSteps {
-  type?: string;
-  originalArray?: number[];
-  sortedArray?: number[];
-  steps?: number[][];
-}
+import { mergeSteps, SortingSteps } from '../sortingHelper';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +14,7 @@ export class QuicksortService {
     const pivotIndex = Math.floor((right + left) / 2);
     const pivot = array[pivotIndex];
     const currentStep = [pivotIndex, left, right];
-    const currentArray = [...array];
+    const sortedArray = [...array];
     let i = left;
     let j = right;
 
@@ -34,7 +28,7 @@ export class QuicksortService {
       }
 
       if (i <= j) {
-        [currentArray[i], currentArray[j]] = [currentArray[j], currentArray[i]];
+        [sortedArray[i], sortedArray[j]] = [sortedArray[j], sortedArray[i]];
         currentStep.push(...[i, j]);
         i += 1;
         j -= 1;
@@ -42,7 +36,7 @@ export class QuicksortService {
     }
 
     sortingSteps.steps?.push(currentStep);
-    return { index: i, currentArray };
+    return { index: i, sortedArray };
   };
 
   quickSort = (
@@ -50,26 +44,34 @@ export class QuicksortService {
     left: number = 0,
     right: number = array.length - 1,
     sortingSteps?: SortingSteps,
-  ) => {
-    const currentSortingSteps = sortingSteps || {
+  ): SortingSteps => {
+    let currentSortingSteps = sortingSteps || {
       type: 'Quicksort',
       originalArray: [...array],
       sortedArray: [],
       steps: [],
     };
 
+    let index = -1;
     if (array.length > 1) {
-      const { index, currentArray } = this.partition(array, left, right, currentSortingSteps);
+      const result = this.partition(array, left, right, currentSortingSteps);
+      index = result.index;
+      currentSortingSteps.sortedArray = result.sortedArray;
 
       if (left < index - 1) {
-        this.quickSort(currentArray, left, index - 1, currentSortingSteps);
+        currentSortingSteps = mergeSteps(
+          currentSortingSteps,
+          this.quickSort(currentSortingSteps.sortedArray, left, index - 1, currentSortingSteps),
+        );
       }
 
       if (index < right) {
-        this.quickSort(currentArray, index, right, currentSortingSteps);
+        currentSortingSteps = mergeSteps(
+          currentSortingSteps,
+          this.quickSort(currentSortingSteps.sortedArray, index, right, currentSortingSteps),
+        );
       }
     }
-    currentSortingSteps.sortedArray = array;
     return currentSortingSteps;
   };
 }

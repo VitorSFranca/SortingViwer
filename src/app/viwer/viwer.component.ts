@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { QuicksortService, SortingSteps } from '../services/Quicksort/quicksort.service';
+import { QuicksortService } from '../services/Quicksort/quicksort.service';
+import { SortingSteps } from '../services/sortingHelper';
 
 @Component({
   selector: 'app-viwer',
@@ -8,14 +9,21 @@ import { QuicksortService, SortingSteps } from '../services/Quicksort/quicksort.
 })
 export class ViwerComponent {
   sortingArray = [19, 24, 1, 31, 24, 15, 16, 26, 20, 37];
-  result: SortingSteps = {};
+  result: SortingSteps = {
+    type: '',
+    originalArray: [],
+    sortedArray: [],
+    steps: [],
+  };
   currentPivot = -1;
   left = -1;
   right = -1;
   swapLeft = -1;
   swapRight = -1;
 
-  constructor(private quicksortService: QuicksortService) {}
+  constructor(private quicksortService: QuicksortService) {
+    // console.log(this.quicksortService.quickSort([...this.sortingArray]));
+  }
 
   showIterations(): void {
     this.nextIteration(this.result.steps ? this.result.steps[0] : []);
@@ -23,7 +31,8 @@ export class ViwerComponent {
 
   doSorting(): void {
     this.result = this.quicksortService.quickSort([...this.sortingArray]);
-    this.showIterations();
+    this.sortingArray = this.result.sortedArray;
+    // this.showIterations();
   }
 
   nextIteration(currentIteration: number[], step = 0, iteration = 0): void {
