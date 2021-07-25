@@ -1,5 +1,4 @@
 <div class="viwer-container">
-    <h1>Test2</h1>
     <div class="viwer-item pm-background"
         *ngFor="let item of sortingArray; let i = index"
         [ngClass]="{
@@ -9,5 +8,11 @@
     >
         {{ item }}
     </div>
+    <mat-form-field appearance="fill">
+        <mat-label>Sorting Type</mat-label>
+        <mat-select [(value)]="sortingType">
+          <mat-option>None</mat-option>
+          <mat-option value="Quicksort">Quicksort</mat-option>
+        </mat-select>
+      </mat-form-field>
 </div>
-<button mat-raised-button color="primary" (click)="doSorting()">Sort</button>

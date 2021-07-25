@@ -1,1 +1,9 @@
-<app-viwer></app-viwer>
+<div class="app-container">
+    <nav class="navbar pm-background">
+        <button mat-raised-button color="primary">Sort</button>
+    </nav>  
+    <app-viwer *ngFor="let viwerType of sortingViwers"></app-viwer>
+    <app-viwer-creator></app-viwer-creator>
+    <!-- <app-viwer-creator addSortingType={{addSorting}}></app-viwer-creator> -->
+    <!-- <button mat-raised-button color="primary" (click)="addSorting()">Add Sort</button> -->
+</div>

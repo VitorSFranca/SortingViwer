@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export default class AppComponent {
   title = 'Sorting Viwer';
+  sortingViwers: string[] = [];
+
+  addSorting = () => {
+    this.sortingViwers.push('Quicksort');
+  };
 }

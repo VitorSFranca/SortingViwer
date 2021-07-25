@@ -8,7 +8,8 @@ import { SortingSteps } from '../services/sortingHelper';
   styleUrls: ['./viwer.component.scss'],
 })
 export class ViwerComponent {
-  sortingArray = [19, 24, 1, 31, 24, 15, 16, 26, 20, 37];
+  sortingArray = [];
+  sortingType = '';
   result: SortingSteps = {
     type: '',
     originalArray: [],
@@ -21,9 +22,7 @@ export class ViwerComponent {
   swapLeft = -1;
   swapRight = -1;
 
-  constructor(private quicksortService: QuicksortService) {
-    this.quicksortService.quickSort([...this.sortingArray]);
-  }
+  constructor(private quicksortService: QuicksortService) {}
 
   doSorting(): void {
     this.result = this.quicksortService.quickSort([...this.sortingArray]);
