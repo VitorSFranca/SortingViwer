@@ -1,4 +1,4 @@
-import { SortingSteps } from './sortingHelper';
+import { SortingSteps } from './helper/sortingHelper';
 
 export interface StepsDataMock {
   arrayToSort: number[];

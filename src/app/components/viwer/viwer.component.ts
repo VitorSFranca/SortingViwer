@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { QuicksortService } from '../services/Quicksort/quicksort.service';
-import { SortingSteps } from '../services/sortingHelper';
+import { SortingSteps } from 'src/app/services/helper/sortingHelper';
+import { QuicksortService } from 'src/app/services/quicksort/quicksort.service';
 
 @Component({
   selector: 'app-viwer',

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { mergeSteps, SortingSteps } from '../sortingHelper';
+import { mergeSteps, SortingSteps } from '../helper/sortingHelper';
 
 @Injectable({
   providedIn: 'root',
