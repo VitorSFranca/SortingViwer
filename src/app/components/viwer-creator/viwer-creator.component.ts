@@ -1,29 +1,23 @@
-import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { Component, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { decrement, increment, reset } from '../../ngRx/actions/sortingManager.actions';
+import { addSortingMethod } from 'src/app/ngRx/sortingManager/sortingManager.actions';
 
 @Component({
   selector: 'app-viwer-creator',
   templateUrl: './viwer-creator.component.html',
   styleUrls: ['./viwer-creator.component.scss'],
 })
-export class ViwerCreatorComponent {
-  count$: Observable<number>;
+export class ViwerCreatorComponent implements OnInit {
+  x$: Observable<any> | undefined;
 
-  constructor(private store: Store<{ count: number }>) {
-    this.count$ = store.select('count');
+  constructor(private store: Store<any>) {}
+
+  ngOnInit() {
+    this.x$ = this.store.pipe(select('sortingManager'));
   }
 
-  increment() {
-    this.store.dispatch(increment());
-  }
-
-  decrement() {
-    this.store.dispatch(decrement());
-  }
-
-  reset() {
-    this.store.dispatch(reset());
+  addSortingMethod() {
+    this.store.dispatch(addSortingMethod({ sortingMethodName: 'newName' }));
   }
 }

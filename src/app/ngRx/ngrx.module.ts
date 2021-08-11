@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
-import { counterReducer } from './reducers/sortingManager.reducer';
+import { sortingManagerReducer } from './sortingManager/sortingManager.reducer';
 
 @NgModule({
   declarations: [],
-  imports: [StoreModule.forRoot({ count: counterReducer })],
+  imports: [StoreModule.forRoot({ sortingManager: sortingManagerReducer })],
   providers: [],
   bootstrap: [],
 })
